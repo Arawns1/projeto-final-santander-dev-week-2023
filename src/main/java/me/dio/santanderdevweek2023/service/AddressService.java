@@ -6,13 +6,10 @@ import me.dio.santanderdevweek2023.exceptions.NoSuchElementException;
 import me.dio.santanderdevweek2023.model.Address;
 import me.dio.santanderdevweek2023.repository.AddressRepository;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.spi.DestinationSetter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 @Service
 public class AddressService {
@@ -23,7 +20,7 @@ public class AddressService {
     @Autowired
     ModelMapper modelMapper;
 
-    public Iterable<Address> findAllAddresss(){
+    public Iterable<Address> findAllAddresses(){
         return repository.findAll();
     }
 

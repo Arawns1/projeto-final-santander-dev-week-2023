@@ -8,8 +8,6 @@ import me.dio.santanderdevweek2023.repository.ClientRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.beans.Transient;
 import java.util.Optional;
 
 @Service
@@ -39,7 +37,6 @@ public class ClientService {
         return repository.save(cliente);
     }
 
-
     public Client updateClient(String id, ClientDTO clientDTO){
         Optional<Client> clientFound = repository.findById(id);
 
@@ -49,7 +46,7 @@ public class ClientService {
             cliente.setAddress(addressFound);
             return repository.save(cliente);
         } else {
-            throw new NoSuchElementException("Cliente não encontrado com o ID: " + id);
+            throw new NoSuchElementException("Client not found with ID: " + id);
         }
     }
 

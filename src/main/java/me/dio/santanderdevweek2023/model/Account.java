@@ -1,7 +1,10 @@
 package me.dio.santanderdevweek2023.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Set;
 import java.util.UUID;
@@ -13,18 +16,18 @@ import java.util.UUID;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString(includeFieldNames = true)
+@ToString
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "acc_cd_id")
     private UUID id;
 
-    @Column(name = "acc_num_numberAccount")
-    private String number;
+    @Column(name = "acc_num_acc-number")
+    private Long number;
 
-    @Column(name = "acc_num_agency")
-    private int agency;
+    @Column(name = "acc_tx_agency")
+    private String agency;
 
     @Column(name = "acc_num_balance")
     private double balance;
@@ -32,14 +35,15 @@ public class Account {
     @Column(name = "acc_num_limit")
     private double limit;
 
-    //FIXME: "relação card-account incorreta. A conta tem vários cartões. Mas um cartão só pertence a uma conta"
-    @OneToMany(mappedBy = "account")
+    @Column(name = "acc_tx_password")
+    private String password;
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Set<Card> cards;
 
     @OneToOne
     private Client client;
-
-    @OneToMany
-    private Set<PaymentMethod> paymentMethod;
 
 }

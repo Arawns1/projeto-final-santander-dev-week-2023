@@ -23,8 +23,8 @@ public class PaymentMethodService {
         return PaymentMethodFound.orElseThrow(() -> new NoSuchElementException(id, "PaymentMethod"));
     }
 
-    public PaymentMethod savePaymentMethod(PaymentMethod PaymentMethod){
-        return repository.save(PaymentMethod);
+    public PaymentMethod savePaymentMethod(PaymentMethod paymentMethod){
+        return repository.save(paymentMethod);
     }
 
     public void updatePaymentMethod(UUID id, PaymentMethod PaymentMethod){

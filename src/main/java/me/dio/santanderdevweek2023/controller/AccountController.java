@@ -1,5 +1,7 @@
 package me.dio.santanderdevweek2023.controller;
 
+import me.dio.santanderdevweek2023.dto.AccountDTO;
+import me.dio.santanderdevweek2023.dto.AccountResponseDTO;
 import me.dio.santanderdevweek2023.model.Account;
 import me.dio.santanderdevweek2023.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,13 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Account> findAllAccounts(@PathVariable("id") UUID id){
-        return ResponseEntity.ok(service.findAccountById(id));
+    public ResponseEntity<Account> findAccountById(@PathVariable("id") UUID id){
+        return new ResponseEntity<>(service.findAccountById(id),HttpStatus.OK);
+    }
+
+    @GetMapping("/client/{cpf}")
+    public ResponseEntity<Account> findAccountByClientCPF(@PathVariable("cpf") String cpf){
+        return new ResponseEntity<>(service.findAccountByClientCPF(cpf),HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
@@ -32,9 +39,9 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @PostMapping
-    public ResponseEntity<Account> saveAccount( @RequestBody Account account){
-        service.saveAccount(account);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public ResponseEntity<AccountResponseDTO> saveAccount(@RequestBody AccountDTO account){
+
+        return new ResponseEntity<>(service.saveAccount(account),HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAccountById(@PathVariable("id") UUID id){

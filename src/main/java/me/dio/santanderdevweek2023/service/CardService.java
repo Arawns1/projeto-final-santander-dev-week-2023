@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CardService {
@@ -17,7 +18,7 @@ public class CardService {
         return repository.findAll();
     }
 
-    public Card findCardById(Long id){
+    public Card findCardById(UUID id){
         Optional<Card> CardFound = repository.findById(id);
         return CardFound.orElseThrow(() -> new NoSuchElementException(id, "Card"));
     }
@@ -26,16 +27,16 @@ public class CardService {
         return repository.save(Card);
     }
 
-    public void updateCard(Long id, Card Card){
+    public void updateCard(UUID id, Card Card){
         Optional<Card> CardFound = repository.findById(id);
         if(CardFound.isPresent()) {
             repository.save(Card);
         }
     }
 
-    public boolean deleteCard(Long id){
+    public boolean deleteCard(UUID id){
         repository.deleteById(id);
-        Optional<Card> CardDelete = repository.findById(Long.valueOf(id));
+        Optional<Card> CardDelete = repository.findById(id);
         return CardDelete.isEmpty();
     }
 

@@ -2,8 +2,6 @@ package me.dio.santanderdevweek2023.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -13,7 +11,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString(includeFieldNames=true)
+@ToString
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

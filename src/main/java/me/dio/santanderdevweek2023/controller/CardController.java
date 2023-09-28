@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/cards")
 public class CardController {
@@ -20,12 +22,12 @@ public class CardController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Card> findAllCards(@PathVariable("id") Long id){
+    public ResponseEntity<Card> findAllCards(@PathVariable("id") UUID id){
         return ResponseEntity.ok(service.findCardById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Card> updateCard(@PathVariable("id") Long id, @RequestBody Card card){
+    public ResponseEntity<Card> updateCard(@PathVariable("id") UUID id, @RequestBody Card card){
         service.updateCard(id, card);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -35,7 +37,7 @@ public class CardController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCardById(@PathVariable("id") Long id){
+    public ResponseEntity<Void> deleteCardById(@PathVariable("id") UUID id){
         boolean isCardDeleted = service.deleteCard(id);
         return ResponseEntity.status(isCardDeleted ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND).build();
     }

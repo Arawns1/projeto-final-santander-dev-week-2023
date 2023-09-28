@@ -4,9 +4,12 @@ import me.dio.santanderdevweek2023.model.PaymentMethod;
 import me.dio.santanderdevweek2023.service.PaymentMethodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.UUID;
 
 @RestController
@@ -31,9 +34,19 @@ public class PaymentMethodController {
         service.updatePaymentMethod(id, paymentMethod);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-    @PostMapping
-    public ResponseEntity<PaymentMethod> savePaymentMethod( @RequestBody PaymentMethod paymentMethod){
-        service.savePaymentMethod(paymentMethod);
+    @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE,
+                              MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<PaymentMethod> savePaymentMethod( @RequestPart("icon") MultipartFile icon,
+                                                            @RequestPart("description") String description){
+        byte[] sourceFileContent;
+
+        try {
+            sourceFileContent = icon.getBytes();
+        } catch (IOException e) {
+            throw new RuntimeException("Error at getting bytes from file." + e.getMessage());
+        }
+
+        service.savePaymentMethod(new PaymentMethod(sourceFileContent, description));
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @DeleteMapping("/{id}")

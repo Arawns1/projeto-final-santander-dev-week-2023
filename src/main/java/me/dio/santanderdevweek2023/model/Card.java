@@ -1,9 +1,8 @@
 package me.dio.santanderdevweek2023.model;
-
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_card")
@@ -12,9 +11,11 @@ import java.util.Objects;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString(includeFieldNames=true)
+@ToString
 public class Card {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     @Column(name="cd_id_number", unique = true)
     private Long number;
     @Column(name = "cd_enum_type")
@@ -25,4 +26,11 @@ public class Card {
     @ManyToOne
     @JoinColumn(name = "fk_account_id", referencedColumnName = "acc_cd_id")
     private Account account;
+
+    public Card(Long number, CardType type, double limit, Account account) {
+        this.number = number;
+        this.type = type;
+        this.limit = limit;
+        this.account = account;
+    }
 }
