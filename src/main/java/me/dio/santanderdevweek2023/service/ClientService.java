@@ -33,7 +33,7 @@ public class ClientService {
         return ClientFound.orElseThrow(() -> new NoSuchElementException(id, "Client"));
     }
 
-    public Client saveClient(ClientDTO clientDTO){
+    public ClientDTO saveClient(ClientDTO clientDTO){
         Address addressFound = addressService.verifyExistenceOfAddress(clientDTO.getAddressDTO());
         Client cliente = modelMapper.map(clientDTO, Client.class);
         cliente.setAddress(addressFound);
@@ -44,7 +44,7 @@ public class ClientService {
         } catch (RuntimeException e) {
             throw new NoSuchElementException("Account can't be created! Error: " + e.getMessage());
         }
-        return repository.save(cliente);
+        return modelMapper.map(repository.save(cliente), ClientDTO.class);
     }
 
     public Client updateClient(String id, ClientDTO clientDTO){

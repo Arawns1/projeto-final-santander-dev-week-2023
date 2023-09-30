@@ -1,6 +1,7 @@
 package me.dio.santanderdevweek2023.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import lombok.*;
 import me.dio.santanderdevweek2023.model.security.UserRole;
@@ -19,6 +20,8 @@ public class ClientDTO {
     private String password;
     @JsonFormat(pattern="dd/MM/yyyy")
     private Date birthdate;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private AddressDTO addressDTO;
     private UserRole role;
 }

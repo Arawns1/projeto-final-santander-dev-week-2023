@@ -30,7 +30,7 @@ public class ClientController {
         return new ResponseEntity<>(service.updateClient(id, client), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<Client> saveClient( @RequestBody ClientDTO client){
+    public ResponseEntity<ClientDTO> saveClient( @RequestBody ClientDTO client){
         return new ResponseEntity<>(service.saveClient(client), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")

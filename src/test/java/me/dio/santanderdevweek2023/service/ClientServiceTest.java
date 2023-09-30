@@ -107,14 +107,17 @@ class ClientServiceTest {
     void whenSaveClientThenReturnSuccess() {
         when(addressService.verifyExistenceOfAddress(ADDRESS)).thenReturn(ADDRESS);
         when(repository.save(any())).thenReturn(client);
-        when(modelMapper.map(any(), any())).thenReturn(client);
+        when(modelMapper.map(clientDTO, Client.class)).thenReturn(client);
+        when(modelMapper.map(client, ClientDTO.class)).thenReturn(clientDTO);
 
-        Client response = service.saveClient(clientDTO);
+        ClientDTO response = service.saveClient(clientDTO);
 
         assertEquals(Client.class, response.getClass());
         assertNotNull(response);
         verify(repository, times(1)).save(any(Client.class));
-        assertEqualsDefault(response);
+        assertEquals(CPF, response.getCpf());
+        assertEquals(NAME, response.getName());
+        assertEquals(BIRTHDATE, response.getBirthdate());
     }
 
     @Test
@@ -131,14 +134,17 @@ class ClientServiceTest {
     void whenUpdateClientThenReturnSuccess() {
         when(repository.findById(any())).thenReturn(optionalClient);
         when(addressService.verifyExistenceOfAddress(ADDRESS)).thenReturn(ADDRESS);
-        when(modelMapper.map(any(), any())).thenReturn(client);
+        when(modelMapper.map(clientDTO, Client.class)).thenReturn(client);
+        when(modelMapper.map(client, ClientDTO.class)).thenReturn(clientDTO);
         when(repository.save(any())).thenReturn(client);
 
-        Client response = service.saveClient(clientDTO);
+        ClientDTO response = service.saveClient(clientDTO);
 
         assertNotNull(response);
         assertEquals(Client.class, response.getClass());
-        assertEqualsDefault(response);
+        assertEquals(CPF, response.getCpf());
+        assertEquals(NAME, response.getName());
+        assertEquals(BIRTHDATE, response.getBirthdate());
     }
 
     @Test
