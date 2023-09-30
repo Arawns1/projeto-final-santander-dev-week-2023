@@ -3,27 +3,30 @@ Api do projeto final do Bootcamp Santander dev week 2023 oferecido pela Dio.me
 ```mermaid
 classDiagram
   class Account {
-    +id: string
-    +number: string
-    +agency: number
-    +balance: number
-    +limit: number
+    +id: UUID
+    +number: Long
+    +agency: string
+    +balance: dobule
+    +limit: double
   }
   
   class Card {
+    +id: UUID
     +number: number
-    +type: string
-    +limit: number
-    +account: string
+    +type:CardType
+    +limit: double
   }
   
   class Client {
     +cpf: string
     +name: string
+    +password: string
+    +role: UserRole
+    +birthdate: Date
     +complement: string
     +number: string
-    +address: Address
   }
+
   
   class Address {
     +id: string
@@ -33,6 +36,10 @@ classDiagram
     +city: string
     +uf: string
   }
+  class CardType{
+    +id: int
+    +description: string
+  }
   
   class PaymentMethod {
     +id: string
@@ -40,8 +47,9 @@ classDiagram
     +description: string
   }
   
-  Account <-- "1" *-- "1" Client
-  Account <-- "1" *-- "1" Card
-  Account <-- "1" *-- "1" PaymentMethod
+  Account <--  Client
+  Account <-- Card
+Client <-- Address
+Card <-- CardType
 
 ```
