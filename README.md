@@ -1,7 +1,3 @@
-<h1 align="center">
-        <img alt="Banner" title="#Banner" style="object-fit: contain; height:250px;" src="https://media.discordapp.net/attachments/929069726372597815/1149490892747579402/image.png?width=517&height=130"  />
-</h1>
-
 # 📝 API Bancária - Bootcamp Santander 2023
 
 <p align="center"> Projeto final de API utilizando SpringBoot.</p>
