@@ -4,13 +4,15 @@ import me.dio.santanderdevweek2023.dto.AccountDTO;
 import me.dio.santanderdevweek2023.dto.AccountResponseDTO;
 import me.dio.santanderdevweek2023.dto.CardDTO;
 import me.dio.santanderdevweek2023.exceptions.NoSuchElementException;
-import me.dio.santanderdevweek2023.model.*;
+import me.dio.santanderdevweek2023.model.Account;
+import me.dio.santanderdevweek2023.model.Card;
+import me.dio.santanderdevweek2023.model.CardType;
+import me.dio.santanderdevweek2023.model.Client;
 import me.dio.santanderdevweek2023.repository.AccountRepository;
 import me.dio.santanderdevweek2023.repository.CardRepository;
 import me.dio.santanderdevweek2023.repository.ClientRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,13 +57,7 @@ public class AccountService {
             Account savedAccount;
             CardDTO savedCard;
             Account defaultAccount = generateDefaultAccount(client);
-            try {
-                String encryptedPassword = new BCryptPasswordEncoder().encode(account.getPassword());
-                defaultAccount.setPassword(encryptedPassword);
-                savedAccount = repository.save(defaultAccount);
-            } catch (RuntimeException e) {
-                throw new NoSuchElementException("Account can't be created! Error: " + e.getMessage());
-            }
+            savedAccount = repository.save(defaultAccount);
             savedCard = modelMapper.map(generateDefaultCard(savedAccount), CardDTO.class);
             return new AccountResponseDTO(savedAccount, savedCard);
         }else {

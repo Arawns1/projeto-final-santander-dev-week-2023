@@ -35,8 +35,6 @@ public class Account {
     @Column(name = "acc_num_limit")
     private double limit;
 
-    @Column(name = "acc_tx_password")
-    private String password;
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)

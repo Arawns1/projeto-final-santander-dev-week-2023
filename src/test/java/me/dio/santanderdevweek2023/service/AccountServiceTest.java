@@ -8,6 +8,7 @@ import me.dio.santanderdevweek2023.model.Account;
 import me.dio.santanderdevweek2023.model.Address;
 import me.dio.santanderdevweek2023.model.Card;
 import me.dio.santanderdevweek2023.model.Client;
+import me.dio.santanderdevweek2023.model.security.UserRole;
 import me.dio.santanderdevweek2023.repository.AccountRepository;
 import me.dio.santanderdevweek2023.repository.CardRepository;
 import me.dio.santanderdevweek2023.repository.ClientRepository;
@@ -36,6 +37,7 @@ class AccountServiceTest {
     public static final Date BIRTHDATE    = new Date("25/09/2003");
     public static final String COMPLEMENT = "casa";
     public static final String CLI_NUMBER = "number";
+    public static final UserRole USER_ROLE = UserRole.USER;
     @InjectMocks
     AccountService service;
     @Mock
@@ -77,8 +79,6 @@ class AccountServiceTest {
         assertEquals(AGENCY, response.get(0).getAgency());
         assertEquals(BALANCE, response.get(0).getBalance());
         assertEquals(LIMIT, response.get(0).getLimit());
-        assertEquals(PASSWORD, response.get(0).getPassword());
-
     }
 
 
@@ -95,7 +95,6 @@ class AccountServiceTest {
         assertEquals(AGENCY, response.getAgency());
         assertEquals(BALANCE, response.getBalance());
         assertEquals(LIMIT, response.getLimit());
-        assertEquals(PASSWORD, response.getPassword());
     }
     @Test
     void whenFindAccountByExistingClientCPFThenReturnAccount() {
@@ -114,7 +113,6 @@ class AccountServiceTest {
         assertEquals(AGENCY, result.getAgency());
         assertEquals(BALANCE, result.getBalance());
         assertEquals(LIMIT, result.getLimit());
-        assertEquals(PASSWORD, result.getPassword());
     }
 
     @Test
@@ -188,7 +186,6 @@ class AccountServiceTest {
         assertEquals(AGENCY, response.getAgency());
         assertEquals(BALANCE, response.getBalance());
         assertEquals(LIMIT, response.getLimit());
-        assertEquals(PASSWORD, response.getPassword());
     }
 
     @Test
@@ -213,10 +210,10 @@ class AccountServiceTest {
         card = new Card();
         cardDTO = new CardDTO();
         cardSet = Set.of(card);
-        account = new Account(UUID, NUMBER, AGENCY, BALANCE, LIMIT, PASSWORD, cardSet, client);
+        account = new Account(UUID, NUMBER, AGENCY, BALANCE, LIMIT, cardSet, client);
         optionalAccount = Optional.of(account);
         accountResponseDTO = new AccountResponseDTO(account, cardDTO);
         accountDTO = new AccountDTO(CPF, PASSWORD);
-        optionalClient = Optional.of(new Client(CPF, NAME, BIRTHDATE, COMPLEMENT, CLI_NUMBER, new Address()));
+        optionalClient = Optional.of(new Client(CPF, NAME, PASSWORD, USER_ROLE, BIRTHDATE, COMPLEMENT, CLI_NUMBER, new Address()));
     }
 }

@@ -5,6 +5,7 @@ import me.dio.santanderdevweek2023.dto.ClientDTO;
 import me.dio.santanderdevweek2023.exceptions.NoSuchElementException;
 import me.dio.santanderdevweek2023.model.Address;
 import me.dio.santanderdevweek2023.model.Client;
+import me.dio.santanderdevweek2023.model.security.UserRole;
 import me.dio.santanderdevweek2023.repository.ClientRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,10 @@ class ClientServiceTest {
     public static final Date BIRTHDATE    = new Date("25/09/2003");
     public static final String COMPLEMENT = "casa";
     public static final String NUMBER        = "1234";
+
+    public static final String PASSWORD = "123456";
+
+    public static final UserRole USER_ROLE = UserRole.ADMIN;
     public static final int INDEX = 0;
     public static final Address ADDRESS = new Address(UUID.randomUUID(), "0000001", "Rua x", "Bairro y", "Cidade z", "AB");
 
@@ -187,9 +192,9 @@ class ClientServiceTest {
 
 
     private void startClient(){
-        client = new Client(CPF, NAME, BIRTHDATE, COMPLEMENT, NUMBER, ADDRESS);
-        clientDTO = new ClientDTO(CPF, NAME, BIRTHDATE, new AddressDTO());
-        optionalClient = Optional.of(new Client(CPF, NAME, BIRTHDATE, COMPLEMENT, NUMBER, ADDRESS));
+        client = new Client(CPF, NAME, PASSWORD, USER_ROLE, BIRTHDATE, COMPLEMENT, NUMBER, ADDRESS);
+        clientDTO = new ClientDTO(CPF,PASSWORD, NAME, BIRTHDATE, new AddressDTO(), USER_ROLE);
+        optionalClient = Optional.of(new Client(CPF, NAME, PASSWORD, USER_ROLE, BIRTHDATE, COMPLEMENT, NUMBER, ADDRESS));
     }
 
     private void assertEqualsDefault(Client response){

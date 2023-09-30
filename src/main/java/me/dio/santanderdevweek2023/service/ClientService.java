@@ -7,6 +7,7 @@ import me.dio.santanderdevweek2023.model.Client;
 import me.dio.santanderdevweek2023.repository.ClientRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,6 +37,13 @@ public class ClientService {
         Address addressFound = addressService.verifyExistenceOfAddress(clientDTO.getAddressDTO());
         Client cliente = modelMapper.map(clientDTO, Client.class);
         cliente.setAddress(addressFound);
+        try {
+            String encryptedPassword = new BCryptPasswordEncoder().encode(clientDTO.getPassword());
+            cliente.setPassword(encryptedPassword);
+
+        } catch (RuntimeException e) {
+            throw new NoSuchElementException("Account can't be created! Error: " + e.getMessage());
+        }
         return repository.save(cliente);
     }
 
