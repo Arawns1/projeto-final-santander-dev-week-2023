@@ -6,6 +6,7 @@ import me.dio.santanderdevweek2023.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -14,7 +15,7 @@ public class CardService {
     @Autowired
     CardRepository repository;
 
-    public Iterable<Card> findAllCards(){
+    public List<Card> findAllCards(){
         return repository.findAll();
     }
 
@@ -27,13 +28,15 @@ public class CardService {
         return repository.save(Card);
     }
 
-    public void updateCard(UUID id, Card Card){
+    public Card updateCard(UUID id, Card Card){
         Optional<Card> CardFound = repository.findById(id);
         if(CardFound.isPresent()) {
-            repository.save(Card);
+            return repository.save(Card);
+        }
+        else {
+            throw new NoSuchElementException(id, "Card");
         }
     }
-
     public boolean deleteCard(UUID id){
         repository.deleteById(id);
         Optional<Card> CardDelete = repository.findById(id);

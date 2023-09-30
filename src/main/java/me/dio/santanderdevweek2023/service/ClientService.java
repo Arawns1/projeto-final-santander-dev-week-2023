@@ -8,6 +8,8 @@ import me.dio.santanderdevweek2023.repository.ClientRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,7 +23,7 @@ public class ClientService {
     @Autowired
     ModelMapper modelMapper;
 
-    public Iterable<Client> findAllClients(){
+    public List<Client> findAllClients(){
         return repository.findAll();
     }
 
@@ -51,9 +53,14 @@ public class ClientService {
     }
 
     public boolean deleteClient(String id){
-        repository.deleteById(id);
-        Optional<Client> ClientDelete = repository.findById(id);
-        return ClientDelete.isEmpty();
+        Optional<Client> clientDelete = repository.findById(id);
+        if (clientDelete.isPresent()){
+            repository.deleteById(id);
+            return true;
+        }
+        else{
+            throw new NoSuchElementException("Client not found with ID: " + id);
+        }
     }
 
 }

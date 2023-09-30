@@ -11,6 +11,6 @@ public class NoSuchElementException extends RuntimeException {
     }
 
     public <T> NoSuchElementException(T id, String entidade) {
-        super("Não foi encontrado(a) " + entidade + " com o id = " + id);
+        super(entidade + " not found with ID: " + id);
     }
 }

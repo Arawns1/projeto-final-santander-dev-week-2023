@@ -8,6 +8,8 @@ import me.dio.santanderdevweek2023.repository.AddressRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,8 +21,7 @@ public class AddressService {
     ViaCepService viaCepService;
     @Autowired
     ModelMapper modelMapper;
-
-    public Iterable<Address> findAllAddresses(){
+    public List<Address> findAllAddresses(){
         return repository.findAll();
     }
 
@@ -64,8 +65,14 @@ public class AddressService {
         Optional<Address> addressFound = repository.findByCep(cep);
         //Caso não exista irá cadastrar
         return addressFound.orElseGet(() -> {
-            ViaCEPDTO viaCepResponse = viaCepService.consultarCep(cep);
-            viaCepResponse.setCep(viaCepResponse.getCep().replace("-",""));
+            ViaCEPDTO viaCepResponse;
+            try{
+                viaCepResponse = viaCepService.consultarCep(cep);
+                viaCepResponse.setCep(viaCepResponse.getCep().replace("-",""));
+            }catch(Exception ex){
+                throw new NoSuchElementException( cep,"CEP");
+            }
+
             Address convertedAddress = modelMapper.map(viaCepResponse, Address.class);
             repository.save(convertedAddress);
             return convertedAddress;

@@ -6,6 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class ViaCEPDTO {
     private String cep;
     private String logradouro;

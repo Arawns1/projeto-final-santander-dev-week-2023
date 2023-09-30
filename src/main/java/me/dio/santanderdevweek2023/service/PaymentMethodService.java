@@ -6,6 +6,7 @@ import me.dio.santanderdevweek2023.repository.PaymentMethodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -14,7 +15,7 @@ public class PaymentMethodService {
     @Autowired
     PaymentMethodRepository repository;
 
-    public Iterable<PaymentMethod> findAllPaymentMethods(){
+    public List<PaymentMethod> findAllPaymentMethods(){
         return repository.findAll();
     }
 
@@ -27,10 +28,12 @@ public class PaymentMethodService {
         return repository.save(paymentMethod);
     }
 
-    public void updatePaymentMethod(UUID id, PaymentMethod PaymentMethod){
+    public PaymentMethod updatePaymentMethod(UUID id, PaymentMethod PaymentMethod){
         Optional<PaymentMethod> PaymentMethodFound = repository.findById(id);
         if(PaymentMethodFound.isPresent()) {
-            repository.save(PaymentMethod);
+            return repository.save(PaymentMethod);
+        } else{
+            throw new NoSuchElementException(id, "PaymentMethod");
         }
     }
 

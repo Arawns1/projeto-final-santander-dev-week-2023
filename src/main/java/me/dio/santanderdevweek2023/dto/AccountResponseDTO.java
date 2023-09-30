@@ -1,15 +1,13 @@
 package me.dio.santanderdevweek2023.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import me.dio.santanderdevweek2023.model.Account;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class AccountResponseDTO {
     private Account account;
     private CardDTO cardDTO;

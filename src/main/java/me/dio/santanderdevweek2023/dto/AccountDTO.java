@@ -1,14 +1,12 @@
 package me.dio.santanderdevweek2023.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class AccountDTO {
     private String cpf;
     private String password;

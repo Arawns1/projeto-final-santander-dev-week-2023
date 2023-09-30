@@ -1,9 +1,6 @@
 package me.dio.santanderdevweek2023.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import me.dio.santanderdevweek2023.model.CardType;
 
 import java.util.UUID;
@@ -12,6 +9,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class CardDTO {
     private UUID id;
     private Long number;
