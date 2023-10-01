@@ -36,7 +36,7 @@ public class SecurityConfigurations {
         return (web) -> web.ignoring()
                 .requestMatchers(new AntPathRequestMatcher("/h2-console/**"))
                 .requestMatchers(new AntPathRequestMatcher("/auth/login", HttpMethod.POST.toString()))
-                .requestMatchers(new AntPathRequestMatcher("/clients"))
+                .requestMatchers(new AntPathRequestMatcher("/clients", HttpMethod.POST.toString()))
                 .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**"))
                 .requestMatchers(new AntPathRequestMatcher("/configuration/ui"))
                 .requestMatchers(new AntPathRequestMatcher("/swagger-resources/**"))
