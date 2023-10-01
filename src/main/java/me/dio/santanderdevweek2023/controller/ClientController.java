@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/clients")
+/*@CrossOrigin("*")*/
 public class ClientController {
 
     @Autowired
