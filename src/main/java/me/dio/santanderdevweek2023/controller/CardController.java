@@ -1,5 +1,6 @@
 package me.dio.santanderdevweek2023.controller;
 
+import me.dio.santanderdevweek2023.dto.CardDTO;
 import me.dio.santanderdevweek2023.model.Card;
 import me.dio.santanderdevweek2023.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -17,13 +19,17 @@ public class CardController {
     CardService service;
 
     @GetMapping
-    public ResponseEntity<Iterable<Card>> findAllCards(){
+    public ResponseEntity<List<Card>> findAllCards(){
         return ResponseEntity.ok(service.findAllCards());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Card> findAllCards(@PathVariable("id") UUID id){
         return ResponseEntity.ok(service.findCardById(id));
+    }
+    @GetMapping("/client/{cpf}")
+    public ResponseEntity<List<CardDTO>> findCardsByCPF(@PathVariable("cpf") String cpf){
+        return ResponseEntity.ok(service.findCardsByCPF(cpf));
     }
 
     @PutMapping("/{id}")
